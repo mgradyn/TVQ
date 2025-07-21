@@ -22,13 +22,13 @@
     ```
 
 2. **Setting the environment**
-	Please refer to dependencies in the [task vectors](https://github.com/mlfoundations/task_vectors).
+   - Please refer to dependencies in the [task vectors](https://github.com/mlfoundations/task_vectors).
 
-3. **Prepare data**
-	Most datasets being used should be downloaded automatically with torchvision or huggingface. For the datasets requiring manual preparation, please follow the instructions in  [this issue](https://github.com/mlfoundations/task_vectors/issues/1). Depending on the torchvision version, some issues might arise when downloading specific datasets like  [here](https://github.com/basveeling/pcam/issues/4)  or  [here](https://github.com/pytorch/vision/issues/5662). In this case, using a different torchvision version might solve the issue.
+4. **Prepare data**
+   - Most datasets being used should be downloaded automatically with torchvision or huggingface. For the datasets requiring manual preparation, please follow the instructions in  [this issue](https://github.com/mlfoundations/task_vectors/issues/1). Depending on the torchvision version, some issues might arise when downloading specific datasets like  [here](https://github.com/basveeling/pcam/issues/4)  or  [here](https://github.com/pytorch/vision/issues/5662). In this case, using a different torchvision version might solve the issue.
 
-4. **Download checkpoints**
-	You can download full-precision fine-tuned checkpoints from the [task_vectors GitHub repository](https://github.com/mlfoundations/task_vectors#checkpoints) or via [Google Drive](https://drive.google.com/drive/folders/1u_Tva6x0p6oxu5Eo0ZZsf-520Cc_3MKw).
+6. **Download checkpoints**
+   - You can download full-precision fine-tuned checkpoints from the [task_vectors GitHub repository](https://github.com/mlfoundations/task_vectors#checkpoints) or via [Google Drive](https://drive.google.com/drive/folders/1u_Tva6x0p6oxu5Eo0ZZsf-520Cc_3MKw).
 
 
 ## Task Vector Quantization
@@ -57,24 +57,20 @@ python quantize_task_vector.py --quantize-config configs/quantize_config.json
 
 **Configuration details**
  
- - `quantize_target`
-	 Which model to quantize: `"finetuned_model"` or `"task_vector"`
+ - `quantize_target` - Which model to quantize: `"finetuned_model"` or `"task_vector"`
 
-- `quantize_residual`
-  Set to `true` to enable **Residual Task Vector Quantization (RTVQ)**
-  ⚠️ If you're using RTVQ, make sure to first generate the averaged finetuned model beforehand (used to compute the base vector):
-	```bash
-	python get_avg_model_statedict.py
-	```
+- `quantize_residual` - Set to `true` to enable **Residual Task Vector Quantization (RTVQ)**
+ 	- ⚠️ If you're using RTVQ, make sure to first generate the averaged finetuned model beforehand (used to compute the base vector):
+    
+		```bash
+		python get_avg_model_statedict.py
+		```
 
-- `quantize_task_bit`
-  Bit precision for the task vector, residual vector, or finetuned model
+- `quantize_task_bit` - Bit precision for the task vector, residual vector, or finetuned model
 
-- `quantize_base_bit`
- Bit precision for base vectors
+- `quantize_base_bit` - Bit precision for base vectors
 
-- `q_error_correction`
-  Enables quantization error correction for the base vector
+- `q_error_correction` - Enables quantization error correction for the base vector
 
 
 ## Evaluation
@@ -85,7 +81,7 @@ After quantizing task vectors or finetuned models, you can evaluate the impact o
 python main.py --method <MERGING_METHOD> --load-config configs/load_config.json
 ```
 
-**Supported merging methods**: `task_arithmetic`, `ties_merging`, `lines`, `tall_masks`, `adamerging`, `emr_merging`.
+**Supported merging methods**: `task_arithmetic`, `lines`, `adamerging`, `emr_merging`
 
 
 
