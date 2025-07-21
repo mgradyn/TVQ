@@ -1,0 +1,7 @@
+{
+  "quantize_target": "task_vector",                     
+  "quantize_residual": false,
+  "quantize_task_bit": 4,      
+  "quantize_base_bit": null,
+  "q_error_correction": false        
+}

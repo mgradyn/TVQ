@@ -1,0 +1,5 @@
+{
+  "load_tv_type": "quantized_residual_task_vector",
+  "load_task_bits": 2,
+  "load_base_bits": 3
+}
