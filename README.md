@@ -47,30 +47,23 @@ python quantize_task_vector.py --quantize-config configs/quantize_config.json
 
 ### Example: `configs/quantize_config.json`
 
-<pre><code>{ 
-	"quantize_target": "task_vector", 
-	"quantize_residual": false, 
-	"quantize_task_bit": 4, 
-	"quantize_base_bit": null, 
-	"q_error_correction": false 
-} </code></pre>
+```json5
+{ 
+	"quantize_target": "task_vector",	// "finetuned_model" or "task_vector"
+	"quantize_residual": false, 		// Set true to enable Residual Task Vector Quantization (RTVQ)
+	"quantize_task_bit": 4, 		// Bit precision for the task vector, residual vector, or finetuned model (e.g., 8, 4, 2)
+	"quantize_base_bit": null,		// Bit precision for the base vector (e.g., 8, 4, 2)
+	"q_error_correction": false		// Apply quantization error correction for the base vector
+}
+```
 
-**Configuration details**
- 
- - `quantize_target` - Which model to quantize: `"finetuned_model"` or `"task_vector"`
-
-- `quantize_residual` - Set to `true` to enable **Residual Task Vector Quantization (RTVQ)**
- 	- ⚠️ If you're using RTVQ, make sure to first generate the averaged finetuned model beforehand (used to compute the base vector):
+⚠️ If you're using RTVQ, make sure to first generate the averaged finetuned model beforehand (used to compute the base vector):
     
-		```bash
-		python get_avg_model_statedict.py
-		```
+```bash
+python get_avg_model_statedict.py
+```
 
-- `quantize_task_bit` - Bit precision for the task vector, residual vector, or finetuned model
 
-- `quantize_base_bit` - Bit precision for base vectors
-
-- `q_error_correction` - Enables quantization error correction for the base vector
 
 
 ## Evaluation
@@ -89,16 +82,13 @@ python main.py --method <MERGING_METHOD> --load-config configs/load_config.json
 
 This configuration defines **which checkpoint to load** and **the bit precision to use** during evaluation.
 
-<pre><code>{ 
-	"load_tv_type": "quantized_task_vector",
-	"load_task_bits": 4,
-	"load_base_bits": null
-} </code></pre>
-
-**Configuration details**
--   `load_tv_type` –  `"baseline"`,  `"quantized_finetuned"`, `"quantized_task_vector"`,  `"quantized_residual_task_vector"`
--   `load_task_bits` – Bit precision for the task vector, residual vector, or finetuned model
--   `load_base_bits` – Bit precision for the base vector
+```json5
+{ 
+	"load_tv_type": "quantized_task_vector",	// "baseline",  "quantized_finetuned", "quantized_task_vector",  "quantized_residual_task_vector"
+	"load_task_bits": 4,				// Bit precision for the task vector, residual vector, or finetuned model (e.g., 8, 4, 2)
+	"load_base_bits": null				// Bit precision for the base vector (e.g., 8, 4, 2)
+} 
+```
 
 
 ## To-Do List
