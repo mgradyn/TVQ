@@ -8,7 +8,7 @@ from eval import eval_single_dataset
 def apply_vector(vector, pretrained_checkpoint):#, scaling_coef=1.0):
     """Apply a task vector to a pretrained model."""
     with torch.no_grad():
-        pretrained_model = torch.load(pretrained_checkpoint)
+        pretrained_model = torch.load(pretrained_checkpoint, weights_only=False)
         new_state_dict = {}
         pretrained_state_dict = pretrained_model.state_dict()
         for key in pretrained_state_dict:

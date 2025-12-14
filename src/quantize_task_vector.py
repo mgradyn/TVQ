@@ -49,7 +49,7 @@ QUANTIZATION_BIT_FOR_BASEVECTOR = args.quantize_base_bit
 BASE_Q_ERROR_CORRECTION = args.q_error_correction
 #####################################################################################################################
 
-pretrained_state_dict = torch.load(pretrained_checkpoint).state_dict()
+pretrained_state_dict = torch.load(pretrained_checkpoint, weights_only=False).state_dict()
 reference_state_dict = pretrained_state_dict
 
 
@@ -58,7 +58,7 @@ if RESIDUAL_TASKVECTOR:
     quantized_base_checkpoint = source_root_path+'/checkpoints_taskvector_quantized'+str(QUANTIZATION_BIT_FOR_BASEVECTOR)+'bit'+'/'+model
     avg_ft_model_checkpoint = source_root_path+'/checkpoints/'+model+f'/avg_ft_model.pt'
     
-    avg_ft_model_state_dict = torch.load(avg_ft_model_checkpoint)
+    avg_ft_model_state_dict = torch.load(avg_ft_model_checkpoint, weights_only=False)
     reference_state_dict = avg_ft_model_state_dict
     base_vector_state_dict = {}
     quantized_base_vector_state_dict = {}
@@ -114,7 +114,7 @@ for dataset_name in exam_datasets:
     with torch.no_grad():
         print('TaskVector:' + finetuned_checkpoint)
         try:
-            finetuned_state_dict = torch.load(finetuned_checkpoint).state_dict()
+            finetuned_state_dict = torch.load(finetuned_checkpoint, weights_only=False).state_dict()
         except:
             finetuned_state_dict = pickle.load(open(finetuned_checkpoint, 'rb')).state_dict()
 

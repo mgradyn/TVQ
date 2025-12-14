@@ -16,9 +16,9 @@ class TaskVector():
             assert pretrained_checkpoint is not None and finetuned_checkpoint is not None
             with torch.no_grad():
                 print('TaskVector:' + finetuned_checkpoint)
-                pretrained_state_dict = torch.load(pretrained_checkpoint).state_dict()
+                pretrained_state_dict = torch.load(pretrained_checkpoint, weights_only=False).state_dict()
                 try:
-                    finetuned_state_dict = torch.load(finetuned_checkpoint).state_dict()
+                    finetuned_state_dict = torch.load(finetuned_checkpoint, weights_only=False).state_dict()
                 except:
                     finetuned_state_dict = pickle.load(open(finetuned_checkpoint, 'rb')).state_dict()
                 self.vector = {}
@@ -61,7 +61,7 @@ class TaskVector():
     def apply_to(self, pretrained_checkpoint, scaling_coef=1.0):
         """Apply a task vector to a pretrained model."""
         with torch.no_grad():
-            pretrained_model = torch.load(pretrained_checkpoint)
+            pretrained_model = torch.load(pretrained_checkpoint, weights_only=False)
             new_state_dict = {}
             pretrained_state_dict = pretrained_model.state_dict()
             for key in pretrained_state_dict:
@@ -84,8 +84,8 @@ class QuantizedTaskVector(TaskVector):
             assert quantized_task_vector_checkpoint is not None 
             with torch.no_grad():
                 print('TaskVector:' + quantized_task_vector_checkpoint)
-                quantized_state_dict = torch.load(quantized_task_vector_checkpoint)
-                pretrained_state_dict = torch.load(pretrained_checkpoint).state_dict()
+                quantized_state_dict = torch.load(quantized_task_vector_checkpoint, weights_only=False)
+                pretrained_state_dict = torch.load(pretrained_checkpoint, weights_only=False).state_dict()
 
                 self.vector = {}
 
@@ -125,8 +125,8 @@ class QuantizedFinetunedModel(TaskVector):
             assert pretrained_checkpoint is not None and quantized_finetuned_checkpoint is not None
             with torch.no_grad():
                 print('TaskVector:' + quantized_finetuned_checkpoint)
-                pretrained_state_dict = torch.load(pretrained_checkpoint).state_dict()
-                quantized_finetuned_state_dict = torch.load(quantized_finetuned_checkpoint)
+                pretrained_state_dict = torch.load(pretrained_checkpoint, weights_only=False).state_dict()
+                quantized_finetuned_state_dict = torch.load(quantized_finetuned_checkpoint, weights_only=False)
                 self.vector = {}
                 for key in pretrained_state_dict.keys():
                     weight_quantized = quantized_finetuned_state_dict[key]
@@ -155,9 +155,9 @@ class QuantizedBaseAndTaskVector(TaskVector):
             assert quantized_task_vector_checkpoint is not None 
             with torch.no_grad():
                 print('TaskVector:' + quantized_task_vector_checkpoint)
-                quantized_task_vector_state_dict = torch.load(quantized_task_vector_checkpoint)
-                quantized_base_vector_state_dict = torch.load(quantized_base_vector_checkpoint)
-                pretrained_state_dict = torch.load(pretrained_checkpoint).state_dict()
+                quantized_task_vector_state_dict = torch.load(quantized_task_vector_checkpoint, weights_only=False)
+                quantized_base_vector_state_dict = torch.load(quantized_base_vector_checkpoint, weights_only=False)
+                pretrained_state_dict = torch.load(pretrained_checkpoint, weights_only=False).state_dict()
 
                 self.vector = {}
 

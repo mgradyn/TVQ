@@ -150,7 +150,7 @@ def run(args, log, exam_datasets, pretrained_checkpoint, source_root_path):
         raise ValueError(f"Unsupported load_tv_type: {args.load_tv_type}")
 
 
-    pretrained_model = torch.load(pretrained_checkpoint)
+    pretrained_model = torch.load(pretrained_checkpoint, weights_only=False)
     pretrained_model_dic = pretrained_model.state_dict()
 
     model = ModelWrapper(pretrained_model, exam_datasets)

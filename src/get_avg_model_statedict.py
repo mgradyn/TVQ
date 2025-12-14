@@ -22,7 +22,7 @@ pretrained_checkpoint = source_root_path+'/checkpoints/'+model+'/zeroshot.pt'
 
 avg_finetunedmodel_checkpoint = source_root_path+'/checkpoints/'+model+'/'
 
-pretrained_state_dict = torch.load(pretrained_checkpoint).state_dict()
+pretrained_state_dict = torch.load(pretrained_checkpoint, weights_only=False).state_dict()
 
 # Initialize a dictionary to store the sum of all task vectors
 finetuned_weight_sums = {}
@@ -35,7 +35,7 @@ for dataset_name in exam_datasets:
     with torch.no_grad():
         print('TaskVector:' + finetuned_checkpoint)
         try:
-            finetuned_state_dict = torch.load(finetuned_checkpoint).state_dict()
+            finetuned_state_dict = torch.load(finetuned_checkpoint, weights_only=False).state_dict()
         except:
             finetuned_state_dict = pickle.load(open(finetuned_checkpoint, 'rb')).state_dict()
 
